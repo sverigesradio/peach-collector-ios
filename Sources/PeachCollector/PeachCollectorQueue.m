@@ -109,9 +109,11 @@
             return;
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive
-                && [addedEvent shouldBeFlushedWhenReceivedInBackgroundState]) {
-                [self flush];
+            if([addedEvent isKindOfClass:PeachCollectorEvent.class]) {
+                if ([[UIApplication sharedApplication] applicationState] != UIApplicationStateActive
+                    && [addedEvent shouldBeFlushedWhenReceivedInBackgroundState]) {
+                    [self flush];
+                }
             }
         
             [self checkPublishers];
